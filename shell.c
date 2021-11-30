@@ -16,14 +16,17 @@ int count_semicols(char *line){
 }
 
 char ** split_at_semicolons(char *line,int num){
+	char *copyLine = malloc (strlen(line));
+	strcpy(copyLine,line);
+
   char *sub;
   int current = 0;
   char ** returnThis = malloc(8*num);
-  while( (sub = strsep(&line," ; ")) != NULL){
+  while( (sub = strsep(&copyLine,";")) != NULL){
     int value = *sub;
     if (value != 0){
-      // printf("The value is %d\n",value);
-      // printf("The string is %s\n",sub);
+      //printf("The value is %d\n",value);
+      //printf("The string is %s\n",sub);
       returnThis[current] = sub;
       current++;
     }
@@ -41,7 +44,7 @@ char ** parse_args(char * line,int counter){
     int value = *sub;
     if (value != 0){
       // printf("The value is %d\n",value);
-      // printf("The string is %s\n",sub);
+      //printf("The string is %s\n",sub);
       returnThis[current] = sub;
       current++;
     }
@@ -79,22 +82,30 @@ void execute(char ** good){
 
 int main(int argc, char ** argv){
   while (1){
-    char *blank = malloc(10000);
-    fgets(blank,10000,stdin);
+    // char *blank = malloc(10000);
+    // fgets(blank,10000,stdin);
 
-    char *test = malloc(10000);
-    //fgets(test,10000,stdin);
-    test = "ls -al; echo hello";
+    char *test = malloc(1000000);
+    //test = "echo hello;ls -al;echo goodbye";
+		fgets(test,1000000,stdin);
+
+		char *pos;
+		if ((pos=strchr(test, '\n')) != NULL){
+			*pos = '\0';
+		}
+
+		//printf("The strings are %d",strcmp(test,"echo hello"));
+		//printf("GOOD\n");
     int semicolons = count_semicols(test);
-    printf("There are %d semicolons in this line\n",semicolons);
-    char ** testing = malloc(1000);
+    //printf("There are %d semicolons in this line\n",semicolons);
+    char ** testing = malloc(8*semicolons);
     testing = split_at_semicolons(test,semicolons);
-    printf("Value:  %p\n", testing);
-    // /printf("The strings are %d\n",strcmp(test,test2));
-    for (int i = 0; i < semicolons; i++){
+    for (int i = 0; i <= semicolons; i++){
       int length = countArgs(testing[i]);
+			//printf("The length is %d\n",length);
       char ** good = parse_args(testing[i],length);
       execute(good);
+			//printf("DONE ONCE\n");
     }
     // for (int i = 0; i < length-1; i++){
     //   printf("The thing at good is %s\n",good[i]);
