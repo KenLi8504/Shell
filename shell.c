@@ -132,36 +132,18 @@ void redirectionThing(char * line, int status){
 		//printf("GOT UP TO HERE \n");
 		free(good);
 	}
-	// if (status == 3){
-	// 	int fd = open()
-	// }
-	// if (status == 4){
-	// 	char *symbol = ">";
-	// 	char ** good = split_at_redirection(line,symbol);
-	// 	pid_t pid;
-	// 	pid = fork();
-	// 	if(pid == -1){
-	// 		perror("fork");
-	// 		exit(EXIT_FAILURE);
-	// 	}
-	// 	if(pid == 0){
-	// 	//replace stdout with the write end of the pipe
-	// 		dup2(good[1],STDOUT_FILENO);
-	// 	//close read to pipe, in child
-	// 		close(pipefds[1]);
-	// 		execvp(good[0],countArgs(line));
-	// 		exit(EXIT_SUCCESS);
-	// 	}else{
-	// 	//Replace stdin with the read end of the pipe
-	// 				dup2(good[0],STDIN_FILENO);
-	// 	//close write to pipe, in parent
-	// 				close(pipefds[1]);
-	// 				execvp(good[1],countArgs(line));
-	// 				exit(EXIT_SUCCESS);
-	// 		}
-	// 	}
-	// }
-	
+	if (status == 4){
+		char *symbol = "|";
+		char ** good = split_at_redirection(line,symbol);
+		FILE * first = popen(line,"r");
+		int firstDescriptor = fileno(first);
+		// //FILE * second = popen(good[1],"w");
+		char *newTest = malloc(1000000);
+		// int err = dup2(STDIN_FILENO, firstDescriptor);
+		// FILE * second = popen(good[1],"w");
+		read(firstDescriptor,newTest,1000000);
+		printf("%s\n",newTest);
+	}
 }
 
 //int check_piping(char *line)
