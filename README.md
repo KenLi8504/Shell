@@ -1,11 +1,14 @@
 # Shell
 
 What my Shell implemented/What I tried to implement
+
 I think I have basically everything required, though I'm not sure if I did piping and "<" correctly.
 
 Bugs/Things to note
+
 For redirection, the file name should be right after any redirection symbol; for the way that I parsed it, if you put a space after the symbol the file name will have a space
 after it.
+
 I think there might be a problem with "<" for files with a lot of commands; if the program just has to read a few commands, it works, but if there's a lot, then it only works for the first few and it might just end up printing out the rest without executing them.
 
 
